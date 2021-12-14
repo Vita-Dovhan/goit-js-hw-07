@@ -15,31 +15,39 @@ const markup = galleryItems
 containerEl.insertAdjacentHTML('afterbegin', markup);
 
 containerEl.addEventListener('click', onClickImage);
-window.removeEventListener('keydown', onEscClose)
+
+// window.removeEventListener('keydown', onEscClose)
 
 function onClickImage(event) {
   event.preventDefault();
-  const imgSrc = event.target.dataset.source
+
+
   const instance = basicLightbox.create(`
-     <img src="${imgSrc}"/>
-  `)
+     <img src="${event.target.dataset.source}"/> `, {
+    onShow: (instance) => {
+      window.addEventListener('keydown', onEscClose);
+
+    },
+    onClose: (instance) => {
+      window.removeEventListener('keydown', onEscClose)
+    }
+  })
   if (!event.target.classList.contains('gallery__image')) {
     return
   }
+
   instance.show();
-  window.addEventListener('keydown', onEscClose)
+  function onEscClose(event) {
+
+    if (event.code === 'Escape') {
+
+      instance.close()
+    }
+  };
 }
 
-function onEscClose(event) {
-  event.preventDefault();
-  const imgSrc = event.target.dataset.source
-  const instance = basicLightbox.create(`
-     <img src="${imgSrc}"/>
-  `)
-  if (event.target.code === 'Escape') {
 
-    instance.close()
-  }
-};
+
+
 
 
