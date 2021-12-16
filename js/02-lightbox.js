@@ -7,8 +7,8 @@ const markup = galleryItems
     return `<div class="gallery__item">
     <a class="gallery__item" href="${element.original}">
     <img class="gallery__image"
-    alt="${element.description}" 
     src="${element.preview}"
+     alt="${element.description}" 
      title = "${element.description}" 
     captionDelay = 250ms>
     </a>
